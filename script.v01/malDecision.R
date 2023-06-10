@@ -3,13 +3,16 @@ library(shinyWidgets)
 library(DT)
 library(tidyverse)
 library(randomForest)
+library(rmarkdown)
+
 
 options(shiny.maxRequestSize = 100 * 1024^2)
 
 # UI
 ui <- fluidPage(
-  tags$img(src = "/Users/koissi/Desktop/R_SIR_Beh/Urbanized-malaria/Urban_malaria/pexels-pixabay-86722.jpg", width = "100%", height = "auto"),
+  tags$img(src = "pexels-pixabay-86722.jpg", width = "100%", height = "auto"),
   downloadButton("download", "Download.csv"),
+  downloadButton("download_report", "Download Report"), 
   align = "center",
   tags$h2("malDecision: Interactive Tool For Informed-Decision-Making"),
   setBackgroundColor(
@@ -36,8 +39,6 @@ ui <- fluidPage(
   )
 )
 
-
-# Server
 # Server
 server <- function(input, output, session) {
   # Read epi data
@@ -55,7 +56,8 @@ server <- function(input, output, session) {
   
   # Run analysis and generate outputs
   analysis_results <- reactive({
-    req(input$run_analysis, epi_data(), input$cluster_var, input$classifier, input$dependent_var)
+    req(input$run_analysis, epi_data(), input$cluster_var,
+        input$classifier, input$dependent_var)
     
     cluster_var <- input$cluster_var
     classifiers <- input$classifier
@@ -70,45 +72,62 @@ server <- function(input, output, session) {
     # Perform cluster-specific random forest regression
     clusters <- unique(cluster_data)
     
-    var_importance <- lapply(clusters, function(x) {
+    var_importance <- lapply(clusters$cluster, function(x) {
       cluster_indices <- which(cluster_data == x)
-      cluster_prevalence <- prevalence_data[cluster_indices, ] %>%
-        dplyr::select(-!!sym(cluster_var))
+      cluster_prevalence <- prevalence_data[cluster_indices, ] %>% 
+        dplyr::select(-{{cluster_var}})
       
-      rf_model <- randomForest(as.formula(paste0(dependent_var, " ~ .")),
-                               ntree = 1000, importance = TRUE,
-                               data = cluster_prevalence)
+      rf_model <- randomForest(as.formula(paste0(dependent_var, " ~ .")),ntree=1000, importance=TRUE, data = cluster_prevalence)
       df <- as.data.frame(importance(rf_model))
-      data.frame(Cluster = x, Variable = rownames(df), Importance = df$IncNodePurity) %>%
+      data.frame(Cluster = x, Variable = rownames(df), Importance = df$IncNodePurity) %>% 
         arrange(Importance)
     })
     
     var_importance_df <- do.call(rbind, var_importance)
-    var_importance_df$Cluster <- as.factor(var_importance_df$Cluster)
     
-    var_importance_df
+    # Plot of Variable Importance for each cluster
+    var_imp_plot <- ggplot(var_importance_df, aes(x = reorder(Variable, Importance), y = Importance, fill = Cluster)) +
+      geom_bar(stat = "identity") +
+      labs(x = "Variable", y = "Importance", title = "Variable Importance") +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+    
+    list(var_importance = var_importance_df, var_imp_plot = var_imp_plot)
   })
   
   # Generate variance importance table
-  output$var_imp_table <- renderTable({
+  output$var_imp_table <- renderDataTable({
     req(analysis_results())
-    analysis_results()
+    datatable(analysis_results()$var_importance)
   })
   
-  # Generate report table
-  output$report <- renderTable({
+  # Display the plot
+  output$var_imp_plot <- renderPlot({
     req(analysis_results())
-    analysis_results()
+    print(analysis_results()$var_imp_plot)
   })
+  
   
   # Download data as CSV
   output$download <- downloadHandler(
     filename = "report.csv",
     content = function(file) {
-      write.csv(analysis_results(), file, row.names = FALSE)
+      write.csv(analysis_results()$var_importance, file, row.names = FALSE)
+    }
+  )
+  
+  # Generate PDF report
+  output$download_report <- downloadHandler(
+    filename = "report.pdf",
+    content = function(file) {
+      # Render the R Markdown report
+      rmarkdown::render("report.Rmd", output_file = file,
+                        params = list(var_importance = analysis_results()$var_importance,
+                                      var_imp_plot = analysis_results()$var_imp_plot))
     }
   )
 }
+
 
 
 # Run the app
