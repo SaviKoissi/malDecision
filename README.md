@@ -1,6 +1,6 @@
 # malDecision
 
- Data-driven decision-making is supported by this interactive tool. 
+ Data-driven decision-making to manage infectious disease throughout country with defferent degree of urbanization. This tool is versatile and interactive. 
 
  # How to use the app? 
 
