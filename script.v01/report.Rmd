@@ -1,21 +1,84 @@
 ---
-title: "Dynamic rport"
-author: "Koissi"
-date: "2023-06-10"
-output: pdf_document
+title: "Dynamic report of malaria informed decision making"
+date: \today
+output: 
+  pdf_document:
+    pandoc_args: --webtex
+  html_document:
+    pandoc_args: --webtex
+  always_allow_html: true
 ---
 
+
+```{r, echo=FALSE, out.width="200px", , fig.align="center"}
+knitr::include_graphics("www/FullLogo_Transparent_NoBuffer.png")
+```
+
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
+
 ```
+# Descriptive statistics of the data 
+
+The summary statistics are the following
+```{r}
+# Load the required packages
+library(knitr)
+library(kableExtra)
+
+# Load the summary statistics data
+summarise_data <- summarise_data
+
+# Display the summary statistics table
+# Display the summary statistics table
+kable(summarise_data, format = "latex", caption = "Summary Statistics") %>%
+  kable_styling()
+  
+```
+
+
+
+
+# Spatial distribution of the urbanization
+
+Here the spatial distribution of counties/ districts with respect to their degree of urbanization
 
 ```{r}
-# The `params` object is available in the document.
-params$n
+country
+
 ```
 
-A plot of `params$n` random points.
+
+
+
+# Importance of the determinants per degree of urbanization
+The stacked histogram (Fig. ) displays by the degree of urbanization the importance of determinant 
 
 ```{r}
-plot(rnorm(params$n), rnorm(params$n))
+var_imp_plot
 ```
+
+The detailed values plotted are synthesized in the following table 
+
+
+```{r}
+
+# Load the required packages
+library(knitr)
+library(kableExtra)
+
+# Load the summary statistics data
+var_importance_df<- var_importance_df
+
+# Display the summary statistics table
+kable(var_importance_df, format = "latex",  caption = "Variable Importance") %>%
+  kable_styling()
+#var_importance_df
+```
+
+
+
+
+
+
