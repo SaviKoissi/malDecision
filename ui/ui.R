@@ -63,37 +63,6 @@ appUI <- function() {
     
     align = "center",
     layoutUI,
-    # sidebarLayout(
-    #   sidebarPanel(
-    #     id = "sidebarPanel",
-    #     selectInput("country", "Select a country:", choices = unique(World$name)),
-    #     fileInput("epi_file", "Upload Epi Data", accept = c(".csv", ".txt", ".xlsx", ".xls")),
-    #     
-    #     selectInput("latitude_column", "Select Latitude (x)", choices = NULL),
-    #     selectInput("longitude_column", "Select Longitude (y)", choices = NULL),
-    #     selectInput("cluster_var", "Select Degree of urbanization (Cluster Variable)", choices = NULL),
-    #     selectInput(
-    #       "classifier",
-    #       "Select Determinant(s) (Classifier Variable(s))",
-    #       choices = NULL,
-    #       multiple = TRUE
-    #     ),
-    #     selectInput("dependent_var", "Select Dependent Variable (Prevalence /Incidence)", choices = NULL),
-    #     actionButton("run_analysis", "Run Analysis")
-    #   ),
-    #   mainPanel(tabsetPanel(
-    #     tabPanel("Urbanization map", leafletOutput("map2"), 
-    #              helpText("Please check variable importance on the next tab!")),
-    #     tabPanel(
-    #       "Variance Importance",
-    #       dataTableOutput("var_imp_table"),
-    #       plotOutput("var_imp_plot"), 
-    #       helpText("Please check summary statistics on the next tab!")
-    #     ),
-    #     tabPanel("Report", dataTableOutput("report"),
-    #              helpText("Please go back!!!"))
-    #   ))
-    # ),
     
     
     tags$head(tags$script(
