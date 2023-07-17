@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------
+# malDecision App
+# Original idea: Savi Koissi
+# Edit and Enhancement: Gbedegnon Roseric Azondekon
+#
+# Atlanta, July 2023
+#------------------------------------------------------------------------------------
+
 analysisModule <- function(input, output, session, configs){
   
   summarise_data <- reactive({
