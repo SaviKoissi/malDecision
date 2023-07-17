@@ -12,7 +12,8 @@ suppressPackageStartupMessages({
   libs <- c(
     "shiny", "shinyWidgets", "shinymeta", "DT", "tidyverse", "rmarkdown", 
     "Hmisc", "sf", "rmapshaper", "maps", "knitr", "kableExtra", "tmap",
-    "tmaptools", "gtsummary", "shinycssloaders", "leaflet"
+    "tmaptools", "gtsummary", "shinycssloaders", "leaflet", "wesanderson", 
+    "randomForest"
   )
   
   if (length(setdiff(libs, rownames(installed.packages()))) > 0) {
