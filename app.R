@@ -12,7 +12,8 @@ suppressPackageStartupMessages({
   libs <- c(
     "shiny", "shinyWidgets", "shinymeta", "DT", "tidyverse", "rmarkdown", 
     "Hmisc", "sf", "rmapshaper", "maps", "knitr", "kableExtra", "tmap", "rlang",
-    "tmaptools", "gtsummary", "shinycssloaders", "leaflet", "randomForest"
+    "tmaptools", "gtsummary", "shinycssloaders", "leaflet", "randomForest",
+    "wesanderson"
   )
   
   if (length(setdiff(libs, rownames(installed.packages()))) > 0) {
@@ -49,7 +50,7 @@ server <- function(input, output, session){
   # selected country
   selected_country <- reactive(World[World$name == configs$country(), ])
   
-  callModule(mainPanelModule, "mainPanel", configs)
+  callModule(mainPanelModule, "mainPanel", configs, selected_country, analysis_results)
   
   
 }
