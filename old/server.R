@@ -21,7 +21,6 @@ server <- function(input, output, session) {
       tm_borders(lwd = 1, col = "skyblue") +
       tm_fill(alpha = 0.5, col = "skyblue")
     map
-    #tmap_leaflet(map, in.shiny = TRUE)
   })
   
   get_point <- reactive({ 
@@ -79,18 +78,22 @@ server <- function(input, output, session) {
     available_vars <- names(epi_data())
     
     # Update cluster_var selectInput
-    updateSelectInput(session,
-                      "cluster_var",
-                      choices = available_vars,
-                      selected = selected_vars$cluster_var)
+    updateSelectInput(
+      session,
+      "cluster_var",
+      choices = available_vars,
+      selected = selected_vars$cluster_var
+    )
     
     # Update classifier selectInput, excluding selected cluster_var
     available_vars_classifier <-
       setdiff(available_vars, selected_vars$cluster_var)
-    updateSelectInput(session,
-                      "classifier",
-                      choices = available_vars_classifier,
-                      selected = selected_vars$classifier)
+    updateSelectInput(
+      session,
+      "classifier",
+      choices = available_vars_classifier,
+      selected = selected_vars$classifier
+    )
     
     # Update dependent_var selectInput, excluding selected cluster_var and classifier
     available_vars_dependent <-
@@ -123,10 +126,6 @@ server <- function(input, output, session) {
     cluster_var <- input$cluster_var
     classifiers <- input$classifier
     dependent_var <- input$dependent_var
-    # selected_cols <- c(classifiers, dependent_var)
-    # selected_data <- epi_data()[, selected_cols]
-    # 
-    # s_data <- lapply(split(selected_data, epi_data()$cluster_var), summary)
     
     summarise_data <- epi_data() %>% 
       summary()
@@ -153,8 +152,7 @@ server <- function(input, output, session) {
           }
         })
       
-      rf_model <-
-        randomForest(
+      rf_model <- randomForest(
           as.formula(paste0(dependent_var, " ~ .")),
           ntree = 1000,
           importance = TRUE,
