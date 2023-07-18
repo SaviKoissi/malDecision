@@ -13,7 +13,7 @@ suppressPackageStartupMessages({
     "shiny", "shinyWidgets", "shinymeta", "DT", "tidyverse", "rmarkdown", 
     "Hmisc", "sf", "rmapshaper", "maps", "knitr", "kableExtra", "tmap", "rlang",
     "tmaptools", "gtsummary", "shinycssloaders", "leaflet", "randomForest",
-    "wesanderson"
+    "wesanderson", "shinyjs", "leaflet.extras", "htmltools", "tinytex"
   )
   
   if (length(setdiff(libs, rownames(installed.packages()))) > 0) {
@@ -22,6 +22,10 @@ suppressPackageStartupMessages({
   }
   
   lapply(libs, library, character.only = TRUE, quietly = TRUE)
+  
+  if(!tinytex::is_tinytex()){
+    tinytex::install_tinytex()
+  }
 })
 
 
@@ -33,6 +37,7 @@ data(World)
 source("modules/mainPanel.R")
 source("modules/sideBarPanel.R")
 source("modules/analysis.R")
+source("modules/report.R")
 
 # Load ui Components
 source("ui/layoutUI.R")
@@ -51,6 +56,19 @@ server <- function(input, output, session){
   selected_country <- reactive(World[World$name == configs$country(), ])
   
   callModule(mainPanelModule, "mainPanel", configs, selected_country, analysis_results)
+  
+  callModule(reportModule, "report", configs, analysis_results, selected_country)
+  
+  observeEvent(analysis_results, {
+    output$download <- downloadHandler(
+      filename = function() {
+        paste0("malDecision_Data_", Sys.Date(), ".csv")
+      },
+      content = function(file) {
+        write.csv(analysis_results$var_importance(), file, row.names = FALSE)
+      }
+    )
+  })
   
   
 }
