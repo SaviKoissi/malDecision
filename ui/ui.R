@@ -58,8 +58,8 @@ appUI <- function() {
       )
     ),
     
-    downloadButton("download", "Download.csv"),
-    downloadButton("download_report", "Download Report"),
+    downloadButton("download", "Export Importance Table"),
+    reportModuleOutput("report"),
     
     align = "center",
     layoutUI,
