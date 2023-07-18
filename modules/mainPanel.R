@@ -73,18 +73,18 @@ mainPanelModule <- function(input, output, session, configs, selected_country, a
           "<br>Cluster: ", get_point()[[configs$cluster()]]
         )
       ) %>% 
-      addLegend("bottomright", pal = color_picker(), values = unique(get_point()[[configs$cluster()]]), title = "Clusters", opacity = 1)
-    
-    # map_point #tmap_leaflet(map_point, in.shiny = TRUE)
+      addLegend(
+        "bottomright", 
+        pal = color_picker(), 
+        values = unique(get_point()[[configs$cluster()]]), 
+        title = "Clusters", 
+        opacity = 1
+      )
   })
   
   output$map <- renderLeaflet({
     get_country_map()
   })
-  
-  
-  # Keep a reference to the projected points
-  # projected_points <- reactiveVal(NULL)
   
   # Update the projected points when the "Run Analysis" button is clicked
   observeEvent(configs$run_analysis_btn(), {
@@ -95,7 +95,6 @@ mainPanelModule <- function(input, output, session, configs, selected_country, a
   
   # Generate variance importance table
   output$var_imp_table <- renderDataTable({
-    # req(analysis_results())
     datatable(
       analysis_results$var_importance(),
       options = list(scrollX = TRUE, scrollY = "250px")
@@ -104,15 +103,12 @@ mainPanelModule <- function(input, output, session, configs, selected_country, a
   
   # Display the plot
   output$var_imp_plot <- renderPlot({
-    # req(analysis_results())
     analysis_results$var_imp_plot()
   })
   
   
   # Display summary statistics
   output$report <- renderDataTable({
-    # req(analysis_results())
-    # analysis_results()$summarise_data
     DT::datatable(
       analysis_results$summarise_data(),
       options = list(scrollX = TRUE, scrollY = "400px")
@@ -120,8 +116,6 @@ mainPanelModule <- function(input, output, session, configs, selected_country, a
   })
   
   output$data_prev <- renderDataTable({
-    # req(analysis_results())
-    # analysis_results()$summarise_data
     DT::datatable(
       configs$epi_data(),
       options = list(scrollX = TRUE, scrollY = "500px")
