@@ -27,34 +27,58 @@ mainPanelModuleOutput <- function(id){
 }
 
 mainPanelModule <- function(input, output, session, configs, selected_country, analysis_results){
+  map_settings <- reactive({
+    leaflet(options = leafletOptions(minZoom = 2.5, worldCopyJump = FALSE, maxBounds = list(list(-80, -180), list(90, 180)))) %>%
+      leaflet::addProviderTiles("CartoDB", group = "CartoDB") %>% 
+      leaflet::addProviderTiles("Esri", group = "Esri") %>% 
+      leaflet::addProviderTiles("OpenStreetMap", group = "OpenStreetMap") %>% 
+      leaflet::addLayersControl(baseGroups = c("CartoDB", "Esri", "OpenStreetMap"), options = layersControlOptions(collapsed = TRUE)) %>% 
+      leaflet::addScaleBar(position = "bottomleft") %>% 
+      leaflet.extras::addFullscreenControl() %>% 
+      leaflet.extras::addResetMapButton()
+  })
+  
+  color_picker <- reactive({
+    leaflet::colorFactor(palette = "RdYlGn", configs$epi_data()[[unique(configs$cluster())]])
+  })
+  
   get_country_map <- reactive({
-    map <- tm_shape(selected_country()) +
-      tm_borders(lwd = 1, col = "black") +
-      tm_fill(alpha = 0.1, col = "black")
-    map
-    #tmap_leaflet(map, in.shiny = TRUE)
+    map_settings() %>% 
+      addPolygons(data = selected_country(), color = "black", opacity = 1, weight = 1, fillOpacity = 0.1)
   })
   
   get_point <- reactive({ 
     req(configs$epi_data(), configs$long(), configs$lat())
-    epi_data_sf <- st_as_sf(configs$epi_data(),
-                            coords = c(configs$long(), configs$lat()), 
-                            crs = 4326)
-    return(epi_data_sf) 
+    
+    configs$epi_data() %>% 
+      mutate(
+        lat = configs$epi_data()[[configs$lat()]],
+        long = configs$epi_data()[[configs$long()]]
+      )
   })
   
   get_map <- reactive({
     req(selected_country(),  get_point())
     
-    tm_shape(selected_country()) +
-      tm_borders(lwd = 1)+
-      tm_shape(get_point()) +
-      tm_symbols(col = configs$cluster(), palette ="Paired", size = 0.1)
+    get_country_map() %>% 
+      addCircleMarkers(
+        data = get_point(), 
+        color = "black",
+        fillColor = color_picker()(get_point()[[configs$cluster()]]),
+        lat = ~lat, lng = ~long,
+        radius = 4, opacity = 1, weight = 1, fillOpacity = 1,
+        label = ~htmltools::htmlEscape(NAME),
+        popup = ~paste0(
+          "<b>", NAME, "</b>",
+          "<br>Cluster: ", get_point()[[configs$cluster()]]
+        )
+      ) %>% 
+      addLegend("bottomright", pal = color_picker(), values = unique(get_point()[[configs$cluster()]]), title = "Clusters", opacity = 1)
     
     # map_point #tmap_leaflet(map_point, in.shiny = TRUE)
   })
   
-  output$map <- renderTmap({
+  output$map <- renderLeaflet({
     get_country_map()
   })
   
@@ -64,7 +88,7 @@ mainPanelModule <- function(input, output, session, configs, selected_country, a
   
   # Update the projected points when the "Run Analysis" button is clicked
   observeEvent(configs$run_analysis_btn(), {
-    output$map <- renderTmap({
+    output$map <- renderLeaflet({
       get_map()
     })
   })
