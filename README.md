@@ -1,6 +1,6 @@
 # malDecision
 
- Data-driven decision-making to manage infectious disease throughout country with defferent degree of urbanization. This tool is versatile and interactive. 
+ Data-driven decision-making to manage infectious diseases throughout the country with different degrees of urbanization. This tool is versatile and interactive. 
 
  # How to use the app? 
 
@@ -16,9 +16,9 @@
 
  2. Choose a variable cluster that represents the degree of urbanization
 
- 3- Select the classifiers (topo, precipitation, etc.) that represent the determinants
+ 3. Select the classifiers (topo, precipitation, etc.) that represent the determinants
 
- 4. Choose the output variable (PC1_prevalence) 
+ 4. Choose the output variable (PC1) 
 
  5. With a single click, you can run the analysis
 
