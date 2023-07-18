@@ -79,7 +79,7 @@ analysisModule <- function(input, output, session, configs){
       labs(x = "Variable", y = "Importance", title = "Variable Importance") +
       theme_minimal() +
       theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-      scale_fill_manual(values = wes_palette("Royal1")) + #low = "blue", high = "darkblue" wes_palette("FantasticFox1")
+      scale_fill_manual(values = wes_palette("Royal1")) + 
       labs(caption = paste("malDecision", format(Sys.Date(), "%Y")))
   })
   
