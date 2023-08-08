@@ -24,14 +24,14 @@ mainPanelModuleOutput <- function(id){
         plotOutput(ns("var_imp_plot"))#, 
         # helpText("Please check summary statistics on the next tab!")
       ),
+      DFTableOutput(ns("data_prev"), "Data Preview", "table"),
       tabPanel(
         "Summary Report", 
         icon = icon("book"), 
         reportModuleOutput("report"),
         dataTableOutput(ns("report"))#,
         # helpText("Please go back!!!")
-      ),
-      DFTableOutput(ns("data_prev"), "Data Preview", "table")
+      )
     )
   )
 }
