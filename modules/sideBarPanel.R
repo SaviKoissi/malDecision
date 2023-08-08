@@ -9,7 +9,8 @@
 sideBarModuleOutput <- function(id){
   ns <- NS(id)
   sidebarPanel(
-    id = ns("sidebarPanel"),
+    width = 2,
+    id = "nav-sidebar",
     selectInput(ns("country"), "Select a country:", choices = unique(World$name)),
     fileInput(ns("epi_file"), "Upload Epi Data", accept = c(".csv", ".txt", ".xlsx", ".xls")),
     
