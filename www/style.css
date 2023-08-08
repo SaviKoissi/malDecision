@@ -58,6 +58,11 @@ body {
   object-fit: fill;
   margin-bottom: -30px;
 }
+
+#formatheader {
+  background-color: #dcdcdc;
+}
+
 .navbar > .container-fluid .navbar-brand {
   padding: 5px;
 }
