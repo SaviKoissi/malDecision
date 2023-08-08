@@ -8,7 +8,16 @@
 
 reportModuleOutput <- function(id){
   ns <- NS(id)
-  downloadButton(ns("download_report"), "Export Report")
+  fluidRow(
+    column(
+      12, align="center",
+      downloadButton(
+        ns("download_report"),
+        label = "Generate & download report",
+        class = "btn-primary"
+      )
+    )
+  )
 }
 
 reportModule <- function(input, output, session, configs, analysis_results, selected_country){
