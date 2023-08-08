@@ -11,10 +11,12 @@ reportModuleOutput <- function(id){
   fluidRow(
     column(
       12, align="center",
-      downloadButton(
-        ns("download_report"),
-        label = "Generate & download report",
-        class = "btn-primary"
+      shinyjs::disabled(
+        downloadButton(
+          ns("download_report"),
+          label = "Generate & download report",
+          class = "btn-primary"
+        )
       )
     )
   )
