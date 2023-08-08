@@ -61,7 +61,7 @@ reportModule <- function(input, output, session, configs, analysis_results, sele
         value = 0, {
           suppressMessages(
             suppressWarnings(
-              rmarkdown::render("report/report.Rmd", output_file = file, envir = report_envir())
+              rmarkdown::render("src/report/report.Rmd", output_file = file, envir = report_envir())
             )
           )
         }

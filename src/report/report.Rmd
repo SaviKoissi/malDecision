@@ -11,7 +11,7 @@ always_allow_html: true
 
 
 ```{r, echo=FALSE, out.width="200px", , fig.align="center"}
-knitr::include_graphics("../www/FullLogo_Transparent_NoBuffer.png")
+knitr::include_graphics("../../www/FullLogo_Transparent_NoBuffer.png")
 inc_progress()
 ```
 

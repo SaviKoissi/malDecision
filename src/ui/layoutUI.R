@@ -8,7 +8,7 @@
 
 home <- tabPanel(
   "Home",
-  shiny::includeHTML("static/home.html"),
+  shiny::includeHTML("src/static/home.html"),
   div(
     class = "row",
     div(
@@ -34,17 +34,17 @@ analyzer <- tabPanel(
 
 faq <- tabPanel(
   "FAQs and Quick Guide",
-  shiny::includeHTML("static/faq.html")
+  shiny::includeHTML("src/static/faq.html")
 )
 
 license <- tabPanel(
   "License",
-  shiny::includeHTML("static/license.html")
+  shiny::includeHTML("src/static/license.html")
 )
 
 feedback <- tabPanel(
   "Feedback",
-  shiny::includeHTML("static/feedback.html")
+  shiny::includeHTML("src/static/feedback.html")
 )
 
 

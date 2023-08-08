@@ -21,8 +21,9 @@ DFTable <- function(input, output, session, dataset) {
   options = list(
     keys=TRUE,
     paging = TRUE,
-    pageLength = 5,
+    pageLength = 25,
     scrollX = TRUE,
+    scrollY = "800px",
     searching = TRUE,
     dom = 'Bfrltip',
     buttons = list(
