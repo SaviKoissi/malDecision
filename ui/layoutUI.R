@@ -50,8 +50,8 @@ feedback <- tabPanel(
 
 about <- navbarMenu(
   "About",
-  faq,
   license,
+  faq,
   feedback
 )
 
