@@ -62,10 +62,6 @@ body {
   padding: 5px;
 }
 
-#ui_setup-filename {
-  overflow-x: auto;
-}
-
 .navbar-nav > li > .dropdown-menu {
   background-color: #003f87 !important;/*#008dc9;*/
 }
