@@ -34,15 +34,15 @@ options(shiny.maxRequestSize = 100 * 1024 ^ 2)
 data(World)
 
 # Load Modules
-source("modules/mainPanel.R")
-source("modules/sideBarPanel.R")
-source("modules/analysis.R")
-source("modules/report.R")
-source("modules/datatable.R")
+source("src/modules/mainPanel.R")
+source("src/modules/sideBarPanel.R")
+source("src/modules/analysis.R")
+source("src/modules/report.R")
+source("src/modules/datatable.R")
 
 # Load ui Components
-source("ui/layoutUI.R")
-source("ui/ui.R")
+source("src/ui/layoutUI.R")
+source("src/ui/ui.R")
 
 ## ui -------------------------------------------------------------------------------
 ui <- appUI()
