@@ -38,6 +38,7 @@ source("modules/mainPanel.R")
 source("modules/sideBarPanel.R")
 source("modules/analysis.R")
 source("modules/report.R")
+source("modules/datatable.R")
 
 # Load ui Components
 source("ui/layoutUI.R")
@@ -51,26 +52,18 @@ ui <- appUI()
 server <- function(input, output, session){
   configs <- callModule(sideBarModule, "sideBar")
   analysis_results <- callModule(analysisModule, "analysis", configs)
-  
-  # selected country
+
   selected_country <- reactive(World[World$name == configs$country(), ])
-  
+
   callModule(mainPanelModule, "mainPanel", configs, selected_country, analysis_results)
-  
+
   callModule(reportModule, "report", configs, analysis_results, selected_country)
-  
-  observeEvent(analysis_results, {
-    output$download <- downloadHandler(
-      filename = function() {
-        paste0("malDecision_Data_", Sys.Date(), ".csv")
-      },
-      content = function(file) {
-        write.csv(analysis_results$var_importance(), file, row.names = FALSE)
-      }
-    )
+
+  observeEvent(input$gotoapp, {
+    message(input$gotoapp)
+    updateTabsetPanel(session, "mainNavBar", selected = "analyzer")
   })
-  
-  
+
 }
 
 shinyApp(ui, server)
