@@ -66,4 +66,4 @@ server <- function(input, output, session){
 
 }
 
-shinyApp(ui, server)
+shinyApp(ui, server, options = list(launch.browser = TRUE))
