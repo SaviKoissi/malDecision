@@ -9,7 +9,7 @@
 mainPanelModuleOutput <- function(id){
   ns <- NS(id)
   mainPanel(
-    width = 10,
+    width = 9,
     tabsetPanel(
       tabPanel(
         "Urbanization map", 
