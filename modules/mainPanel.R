@@ -9,19 +9,29 @@
 mainPanelModuleOutput <- function(id){
   ns <- NS(id)
   mainPanel(
+    width = 10,
     tabsetPanel(
-      tabPanel("Urbanization map", leafletOutput(ns("map")), 
-               helpText("Please check variable importance on the next tab!")),
+      tabPanel(
+        "Urbanization map", 
+        icon = icon("map"), 
+        leafletOutput(ns("map"), height = 1000)#, 
+        # helpText("Please check variable importance on the next tab!")
+      ),
       tabPanel(
         "Variance Importance",
+        icon = icon("exclamation-triangle"), br(),
         dataTableOutput(ns("var_imp_table")),
-        plotOutput(ns("var_imp_plot")), 
-        helpText("Please check summary statistics on the next tab!")
+        plotOutput(ns("var_imp_plot"))#, 
+        # helpText("Please check summary statistics on the next tab!")
       ),
-      tabPanel("Report", dataTableOutput(ns("report")),
-               helpText("Please go back!!!")),
-      tabPanel("Data Preview", dataTableOutput(ns("data_prev")),
-               helpText("Please go back!!!"))
+      tabPanel(
+        "Summary Report", 
+        icon = icon("book"), 
+        reportModuleOutput("report"),
+        dataTableOutput(ns("report"))#,
+        # helpText("Please go back!!!")
+      ),
+      DFTableOutput(ns("data_prev"), "Data Preview", "table")
     )
   )
 }
@@ -94,10 +104,29 @@ mainPanelModule <- function(input, output, session, configs, selected_country, a
   })
   
   # Generate variance importance table
-  output$var_imp_table <- renderDataTable({
+  output$var_imp_table <- renderDataTable(server = FALSE, {
     datatable(
       analysis_results$var_importance(),
-      options = list(scrollX = TRUE, scrollY = "250px")
+      extensions = c('Buttons','KeyTable'),
+      options = list(
+        scrollX = TRUE, 
+        scrollY = "250px",
+        keys=TRUE,
+        paging = TRUE,
+        dom = 'Bfrltip',
+        buttons = list(
+          list(extend = "csv", filename = "data", 
+               exportOptions = list(
+                 modifier = list(page = "all")
+               )
+          ),
+          list(extend = "excel", filename = "data", 
+               exportOptions = list(
+                 modifier = list(page = "all")
+               )
+          )
+        )
+      )
     )
   })
   
@@ -108,17 +137,34 @@ mainPanelModule <- function(input, output, session, configs, selected_country, a
   
   
   # Display summary statistics
-  output$report <- renderDataTable({
+  output$report <- renderDataTable(server = FALSE,{
     DT::datatable(
       analysis_results$summarise_data(),
-      options = list(scrollX = TRUE, scrollY = "400px")
+      extensions = c('Buttons','KeyTable'),
+      options = list(
+        scrollX = TRUE, 
+        scrollY = "400px",
+        keys=TRUE,
+        paging = TRUE,
+        dom = 'Bfrltip',
+        buttons = list(
+          list(extend = "csv", filename = "data", 
+               exportOptions = list(
+                 modifier = list(page = "all")
+               )
+          ),
+          list(extend = "excel", filename = "data",  
+               exportOptions = list(
+                 modifier = list(page = "all")
+               )
+          )
+        )
+      )
     )
   })
   
-  output$data_prev <- renderDataTable({
-    DT::datatable(
-      configs$epi_data(),
-      options = list(scrollX = TRUE, scrollY = "500px")
-    )
-  })
+  callModule(DFTable,
+             "data_prev",
+             dataset = configs$epi_data
+  )
 }
