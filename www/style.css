@@ -59,8 +59,8 @@ body {
   margin-bottom: -30px;
 }
 
-#formatheader {
-  background-color: #dcdcdc;
+.formatheader {
+  background-color: #dcdcdc !important;
 }
 
 .navbar > .container-fluid .navbar-brand {
