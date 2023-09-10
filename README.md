@@ -16,7 +16,7 @@
 
  2. Choose a variable cluster that represents the degree of urbanization
 
- 3- Select the classifiers (topo, precipitation, etc.) that represent the determinants
+ 3. Select the classifiers (topo, precipitation, etc.) that represent the determinants
 
  4. Choose the output variable (PC1) 
 

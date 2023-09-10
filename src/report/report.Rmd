@@ -1,0 +1,88 @@
+---
+title: "Dynamic report of malDecison"
+date: "`r Sys.Date()`"
+output: 
+  pdf_document:
+    keep_tex: true
+  html_document:
+    keep_md: true
+always_allow_html: true
+---
+
+
+```{r, echo=FALSE, out.width="200px", , fig.align="center"}
+knitr::include_graphics("../../www/FullLogo_Transparent_NoBuffer.png")
+inc_progress()
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+inc_progress()
+```
+
+# Summary statistics by degree of urbanization
+
+```{r data_summary}
+selected_cols <- c(classifier, dependent, cluster_var )
+selected_data <- epi_data[,selected_cols]
+sm <- lapply(split(selected_data, cluster_var), summary)
+summ <- do.call(rbind, sm)
+inc_progress()
+summ
+```
+
+```{r, results='hide'}
+projected_points <- st_as_sf(
+  epi_data,
+  coords = c(configs$long(), configs$lat()), 
+  crs = 4326
+)
+```
+
+# Spatial distribution of the urbanization
+
+Here the spatial distribution of study areas with their urbanization degree
+
+```{r map, echo=FALSE, results='asis', fig.height=10, fig.width=8, fig.cap="Spatial distribution of the urbanization"}
+
+tmap::tmap_mode("plot")
+tm_shape(selected_country) +
+  tm_borders()+
+  tm_shape(projected_points) +
+  tm_symbols(col = cluster_var, palette ="RdYlGn", size = 0.5)+
+  tm_legend(position = c("right", "bottom"))+
+  tm_credits(paste("malDecision", format(Sys.Date(), "%Y")),
+             position = c("LEFT", "BOTTOM"))
+```
+
+# Importance of the determinants per degree of urbanization
+The stacked histogram below displays the importance of determinants.  
+
+```{r importance_plot}
+inc_progress()
+var_imp_plot
+```
+
+The following Table provides the information plotted with numeric values
+
+
+```{r importance_df}
+inc_progress()
+# Load the summary statistics data
+var_importance_df<- var_importance_df
+inc_progress()
+# Display the summary statistics table
+kable(var_importance_df, format = "latex",  caption = "Variable Importance") %>%
+  kable_styling()
+```
+
+```{r end, results='hide'}
+inc_progress()
+```
+
+
+
+
+
+
