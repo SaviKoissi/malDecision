@@ -2,11 +2,20 @@
 
  Data-driven decision-making to manage infectious diseases throughout the country with different degrees of urbanization. This tool is versatile and interactive. 
 
+# To Run this app
+
+Execute the following from your R console:
+
+```R
+## From an R console
+shiny::runGitHub("malDecision", "SaviKoissi")
+```
+
  # How to use the app? 
 
  Please insert a CSV file formatted as follows 
 
- |country|Region|District|long|lat|cluster| classifiers| Output
+ `|country|Region|District|long|lat|cluster| classifiers| Output`
 
  Clusters represent the degree of urbanization of the area and classifiers represent the factors that determine access. The output variable represents the variable to be predicted, such as prevalence or incidence
 
