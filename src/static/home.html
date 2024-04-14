@@ -1,30 +1,50 @@
-<div class="jumbotron col-md-6 col-md-offset-3">
-  <h1 class="display-4">malDecision</h1>
-  <p class="lead">A tool for data-driven decision-making to manage infectious diseases in environments with varying levels of urbanization.</p>
-  <hr class="my-4">
-  <p>malDecision used a machine learning method to prioritize the determinants. This tool helps visualize the spatial distribution of the region of interest and the hierarchy of the determinant post-analysis.  Moreover, the user can download a custom report that could guide him in making informed decisions based on the disease trajectory.</p>
-  <p>The flexible and interactive malDecision tool was created to assist practitioners and decision-makers in adopting a data-driven strategy for the control of infectious diseases in their countries.</p>
-  <p>This tool is outlined in the peer-reviewed publication available.</p>
-  <a class="btn btn-primary btn-lg" href="#" role="button">Read the paper</a>
-</div>
-
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-<!-- <h1>malDecision</h1>
-<h4>Data-driven decision-making to manage infectious diseases throughout the country with different degrees of urbanization.</h4><br>
-<p>The malDecision tool is a versatile and interactive application designed to help help-practitioners and decision makers take a data-driven approach to the management of infectious diseases in their countries.</p> -->
-<h4>Description</h4>
-<!-- <p>Users upload a CSV file with the following header: <span id="formatheader"> |country|Region|District|long|lat|cluster|classifiers|Output </span>. The front-end, graphical web interface of the tool is developed using Shiny, a web application framework for R. The malDecision tool generates an analysis report for the user to download.</p>
-<p>The application is available in a standalone version suitable for use in resource-limited settings, and as a web app to be deployed on a Shiny server.</p>
--->
-<p><span class="formatheader">malDecision</span> is a machine learning-based decision tool. An illustrated guideline can be downloaded and read <a href="doc/manual.pdf" target="_blank">here</a>.</p>
-<p>A template of the data can be downloaded <a href="doc/data_template.xlsx" target="_blank">here</a>.</p>
-<p>The following header appears in the CSV files that users upload: <span class="formatheader">|Name|long|lat|cluster|classifiers|Output</span>.</p>
-<!-- <p>Using Shiny, a web application framework for R, the tool's front-end graphical web interface was created. </p> -->
-<h4>Privacy Note</h4>
-<p>The program is offered in two forms: a standalone version that can be used in environments with modest resources and a web app that can be installed on a Shiny server. <span class="formatheader">malDecision</span> is a desktop application downloaded. It iterates over the loaded notes file while in use but does not store or save any data.</p>
-</div>
-
-
-
-</div>
+  <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>malDecision</title>
+</head>
+<body>
+<h1>Welcome to malDecision!</h1>
+<p>malDecision is an R-based application developed to translate research findings into actionable insights and enhance preparedness for malaria and other emerging infectious diseases. Our tool replicates the analyses undertaken in our study, empowering a broader community of infectious disease researchers, public health officials, and policymakers.</p>
+<h2>Key Features:</h2>
+<h3>Streamlined Analysis:</h3>
+<p>malDecision provides a user-friendly interface for conducting analysis, visualization, and reporting, all within the R environment.</p>
+<h3>Analysis:</h3>
+<p>Input your data and specify your analysis parameters using the provided scripts. Please insert a CSV file formatted as follows:</p>
+<table>
+  <thead>
+    <tr><th>country</th><th>Region</th><th>District</th><th>long</th><th>lat</th><th>cluster</th><th>classifiers</th><th>Output</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+  </tbody>
+</table>
+<p>Clusters represent the degree of urbanization of the area and classifiers represent the factors that determine access. The output variable represents the variable to be predicted, such as prevalence or incidence.</p>
+<h3>Configurable Reports:</h3>
+<p>Users can generate customizable reports using a single file that includes predictors, target variables (incidence or prevalence), and the administrative classification of targeted locations.</p>
+<h3>Regionally Adaptable:</h3>
+<p>malDecision is designed to be regionally adaptable, supporting a wide range of geographies and circumstances. Whether you're focusing on urban, peri-urban, or rural areas, malDecision can accommodate your specific needs.</p>
+<h2>How to Use:</h2>
+<h3>Visualization:</h3>
+<p>Visualize your results using built-in plotting functions or customize your visualizations as needed.</p>
+<h3>Reporting:</h3>
+<p>Generate comprehensive reports summarizing your findings, which can be easily shared with stakeholders or incorporated into research publications.</p>
+<h3>Example</h3>
+<p>Load the 'example.csv' file</p>
+<p>Choose a variable cluster that represents the degree of urbanization</p>
+<p>Select the classifiers (topo, precipitation, etc.) that represent the determinants</p>
+<p>Choose the output variable (PC1)</p>
+<p>With a single click, you can run the analysis</p>
+<p>A cluster-specific Random Forest or a customized report can be withdrawn as an Excel sheet showing the variable of importance. In the custom pdf report containing the descriptive statistics of the dataset, the degree of urbanization is represented spatially. And the variable of importance for each group</p>
+<h2>Who Should Use malDecision:</h2>
+<h3>Researchers:</h3>
+<p>Conduct sophisticated analyses and visualize results to deepen understanding of infectious disease dynamics.</p>
+<h3>Public Health Officials:</h3>
+<p>Inform decision-making and resource allocation by analyzing trends and identifying high-risk areas.</p>
+<h3>Policymakers:</h3>
+<p>Develop evidence-based policies and interventions to mitigate the spread of malaria and other infectious diseases.</p>
+<h2>Get Involved:</h2>
+<p>We welcome contributions from the community to further enhance the functionality and usability of malDecision. Whether you're interested in adding new features, improving documentation, or reporting bugs, we encourage you to get involved and help us make malDecision even better!</p>
+</body>
+</html>
