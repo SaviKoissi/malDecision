@@ -5,13 +5,8 @@ malDecision is an R-based application developed to translate research findings i
 ## Streamlined Analysis:
 malDecision provides a user-friendly interface for conducting analysis, visualization, and reporting, all within the R environment.
 
-##Analysis:
-Input your data and specify your analysis parameters using the provided scripts. Please insert a CSV file formatted as follows: 
-
-|country|Region|District|long|lat|cluster| classifiers| Output
-
-Clusters represent the degree of urbanization of the area and classifiers represent the factors that determine access. The output variable represents the variable to be predicted, such as prevalence or incidence
-
+## Analysis:
+Please insert a CSV file conveniently formatted 
 
 ## Configurable Reports:
 Users can generate customizable reports using a single file that includes predictors, target variables (incidence or prevalence), and the administrative classification of targeted locations.
@@ -24,19 +19,6 @@ Visualize your results using built-in plotting functions or customize your visua
 
 # Reporting:
 Generate comprehensive reports summarizing your findings, which can be easily shared with stakeholders or incorporated into research publications.
-
-# Example
-Load the 'example.csv' file
-
-Choose a variable cluster that represents the degree of urbanization
-
-Select the classifiers (topo, precipitation, etc.) that represent the determinants
-
-Choose the output variable (PC1)
-
-With a single click, you can run the analysis
-
-A cluster-specific Random Forest or a customized report can be withdrawn as an Excel sheet showing the variable of importance. In the custom pdf report containing the descriptive statistics of the dataset, the degree of urbanization is represented spatially. And the variable of importance for each group
 
 # Who Should Use malDecision:
 ## Researchers:
