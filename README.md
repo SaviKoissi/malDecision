@@ -60,12 +60,3 @@ Develop evidence-based policies and interventions to mitigate the spread of mala
 
 # Get Involved:
 We welcome contributions from the community to further enhance the functionality and usability of malDecision. Whether you're interested in adding new features, improving documentation, or reporting bugs, we encourage you to get involved and help us make malDecision even better!
-
-
-
-
- # How to use the app? 
-
-
-
- You can also download the pdf report. 
